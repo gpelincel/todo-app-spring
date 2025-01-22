@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,11 +30,7 @@ public class TaskController {
     @ResponseBody
     @GetMapping("/tasks")
     public List<Task> getTasks() {
-        Date date = new Date();
-
-        Task task = new Task("Tarefa 123", "Realizar tarefa", date);
-
-        return Arrays.asList(task);
+        return this.taskRepository.findAll();
     }
 
     @ResponseBody
@@ -41,5 +38,11 @@ public class TaskController {
     @PostMapping("/tasks")
     public void storeTask(@RequestBody Task task){
         this.taskRepository.save(task);
+    }
+
+    @ResponseBody
+    @GetMapping("/tasks/{id}")
+    public Task getTaskById(@PathVariable Long id) {
+        return this.taskRepository.findById(id).orElse(null);
     }
 }
