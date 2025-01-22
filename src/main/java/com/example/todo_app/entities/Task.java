@@ -1,6 +1,6 @@
 package com.example.todo_app.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 @Entity
 public class Task {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
@@ -22,6 +22,8 @@ public class Task {
         this.description = description;
         this.taskDate = taskDate;
     }
+
+    public Task(){}
 
     public Long getId() {
         return id;
@@ -46,6 +48,11 @@ public class Task {
     }
     public void setTaskDate(Date taskDate) {
         this.taskDate = taskDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Task [id=" + id + ", title=" + title + ", description=" + description + ", taskDate=" + taskDate + "]";
     }
 
     
