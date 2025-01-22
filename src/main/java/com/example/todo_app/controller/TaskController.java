@@ -1,48 +1,68 @@
 package com.example.todo_app.controller;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.todo_app.controller.DTO.TaskDTO;
+import com.example.todo_app.controller.DTO.TaskFormDTO;
 import com.example.todo_app.entities.Task;
 import com.example.todo_app.repository.TaskRepository;
 
 import jakarta.transaction.Transactional;
 
 @RestController
+@RequestMapping("/api/tasks/")
 public class TaskController {
 
     @Autowired
     private TaskRepository taskRepository;
 
     @GetMapping
-    public String helloWorld() {
-        return "Hello, this is the list of tasks!";
+    public List<TaskDTO> getTasks() {
+        List<Task> tasks = this.taskRepository.findAll();
+        return TaskDTO.convert(tasks);
     }
 
-    @ResponseBody
-    @GetMapping("/tasks")
-    public List<Task> getTasks() {
-        return this.taskRepository.findAll();
-    }
-
-    @ResponseBody
+    @PostMapping
     @Transactional
-    @PostMapping("/tasks")
-    public void storeTask(@RequestBody Task task){
+    public TaskDTO storeTask(@RequestBody TaskFormDTO taskDTO) {
+        Task task = taskDTO.convert();
         this.taskRepository.save(task);
+        return new TaskDTO(task);
     }
 
-    @ResponseBody
-    @GetMapping("/tasks/{id}")
-    public Task getTaskById(@PathVariable Long id) {
-        return this.taskRepository.findById(id).orElse(null);
+    @GetMapping("{id}")
+    public TaskDTO getTaskById(@PathVariable Long id) {
+        Task task = this.taskRepository.findById(id).orElse(null);
+        return new TaskDTO(task);
+    }
+
+    @Transactional
+    @PutMapping("{id}")
+    public String updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+        Task task = this.taskRepository.findById(id).orElseThrow();
+
+        task.setDescription(updatedTask.getDescription());
+        task.setTitle(updatedTask.getTitle());
+        task.setTaskDate(updatedTask.getTaskDate());
+        this.taskRepository.save(task);
+
+        return "Task updated";
+    }
+
+    @Transactional
+    @DeleteMapping("{id}")
+    public String deleteTask(@PathVariable Long id) {
+        this.taskRepository.deleteById(id);
+        return "Task deleted";
     }
 }
