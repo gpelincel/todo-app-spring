@@ -15,15 +15,24 @@ public class Task {
     private String title;
     private String description;
     private Date taskDate;
-    
+    private Boolean isDone;
 
-    public Task(String title, String description, Date taskDate) {
+    public Task(String title, String description, Date taskDate, Boolean isDone) {
         this.title = title;
         this.description = description;
         this.taskDate = taskDate;
+        this.isDone = isDone;
     }
 
     public Task(){}
+
+    public Boolean getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
 
     public Long getId() {
         return id;
@@ -54,6 +63,4 @@ public class Task {
     public String toString() {
         return "Task [id=" + id + ", title=" + title + ", description=" + description + ", taskDate=" + taskDate + "]";
     }
-
-    
 }

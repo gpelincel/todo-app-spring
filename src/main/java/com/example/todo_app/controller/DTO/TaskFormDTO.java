@@ -9,12 +9,19 @@ public class TaskFormDTO {
     private String title;
     private String description;
     private Date taskDate;
+    private Boolean isDone;
 
-    public TaskFormDTO(String title, String description, Date taskDate) {
+    public TaskFormDTO(String title, String description, Date taskDate, Boolean isDone) {
         this.title = title;
         this.description = description;
         this.taskDate = taskDate;
+        this.isDone = isDone;
     }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -35,6 +42,7 @@ public class TaskFormDTO {
         task.setTitle(this.title);
         task.setDescription(this.description);
         task.setTaskDate(this.taskDate);
+        task.setIsDone(this.isDone);
 
         return task;
     }
@@ -43,5 +51,6 @@ public class TaskFormDTO {
         task.setDescription(description);
         task.setTitle(title);
         task.setTaskDate(taskDate);
+        task.setIsDone(isDone);
     }
 }

@@ -11,12 +11,18 @@ public class TaskDTO {
     private String title;
     private String description;
     private Date taskDate;
-
+    private Boolean isDone;
+    
     public TaskDTO(Task task){
         id = getId();
         title = getTitle();
         description = getDescription();
         taskDate = getTaskDate();
+        isDone = getIsDone();
+    }
+    
+    public Boolean getIsDone() {
+        return isDone;
     }
 
     public Long getId() {
