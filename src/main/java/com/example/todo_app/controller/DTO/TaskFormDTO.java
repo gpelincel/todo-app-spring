@@ -38,4 +38,10 @@ public class TaskFormDTO {
 
         return task;
     }
+
+    public void TaskUpdate(Task task){
+        task.setDescription(description);
+        task.setTitle(title);
+        task.setTaskDate(taskDate);
+    }
 }

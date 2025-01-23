@@ -48,15 +48,13 @@ public class TaskController {
 
     @Transactional
     @PutMapping("{id}")
-    public String updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+    public TaskDTO updateTask(@PathVariable Long id, @RequestBody TaskFormDTO updatedTask) {
         Task task = this.taskRepository.findById(id).orElseThrow();
 
-        task.setDescription(updatedTask.getDescription());
-        task.setTitle(updatedTask.getTitle());
-        task.setTaskDate(updatedTask.getTaskDate());
+        updatedTask.TaskUpdate(task);
         this.taskRepository.save(task);
 
-        return "Task updated";
+        return new TaskDTO(task);
     }
 
     @Transactional
