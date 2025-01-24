@@ -6,19 +6,25 @@ import java.util.stream.Collectors;
 
 import com.example.todo_app.entities.Task;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class TaskDTO {
     private Long id;
+    @NotBlank(message = "Task title cannot be null or empty")
     private String title;
+    @NotBlank
     private String description;
+    @NotNull
     private Date taskDate;
     private Boolean isDone;
     
     public TaskDTO(Task task){
-        id = getId();
-        title = getTitle();
-        description = getDescription();
-        taskDate = getTaskDate();
-        isDone = getIsDone();
+        id = task.getId();
+        title = task.getTitle();
+        description = task.getDescription();
+        taskDate = task.getTaskDate();
+        isDone = task.getIsDone();
     }
     
     public Boolean getIsDone() {

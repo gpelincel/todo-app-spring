@@ -4,10 +4,16 @@ import java.util.Date;
 
 import com.example.todo_app.entities.Task;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class TaskFormDTO {
     private Long id;
+    @NotBlank(message = "Task title cannot be null or empty")
     private String title;
+    @NotBlank
     private String description;
+    @NotNull
     private Date taskDate;
     private Boolean isDone;
 
@@ -52,5 +58,11 @@ public class TaskFormDTO {
         task.setTitle(title);
         task.setTaskDate(taskDate);
         task.setIsDone(isDone);
+    }
+
+    @Override
+    public String toString() {
+        return "TaskFormDTO [id=" + id + ", title=" + title + ", description=" + description + ", taskDate=" + taskDate
+                + ", isDone=" + isDone + "]";
     }
 }
